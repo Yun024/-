@@ -1,6 +1,7 @@
 # #상품군_README
 
 ## #기초환경설치
+
 ### package설치(dplyr, reshape2, ggplot2, scales)
 
 ```c
@@ -9,12 +10,15 @@ install.packages("reshape2")   : melt함수를 사용해서 데이터를 재구�
 install.packages("ggplot2")    : ggplot차트를 그리기 위한 라이브러리 
 install.packages("scales")       : ggplot그래프의 y축 레이블에 콤마를 넣기 위한 라이브러리
 ```
-########################################################################
-###라이브러리### : 위에서 설치한 라이브러리를 불러오는 구문
-library(dplyr)  		: dplyr 불러오기
-library(reshape2)		: reshape2 불러오기	
-library(ggplot2)		: ggplot2 불러오기
-library(scales)		: scales 불러오기
+
+### library불러오기
+
+```c
+library(dplyr)  
+library(reshape2)
+library(ggplot2)
+library(scales)	
+```
 
 ########################################################################
 ###데이터 읽어오기###
