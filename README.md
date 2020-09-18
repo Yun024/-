@@ -1,7 +1,8 @@
-###### 상품군_README
+# #상품군_README
 
+## #기초환경설치
+### package설치(dplyr, reshape2, ggplot2, scales)
 
-설치한 라이브러리 
 install.packages("dplyr")        : %>% 와 filter 및 select함수를 사용하기 위한 라이브러리 
 install.packages("reshape2")   : melt함수를 사용해서 데이터를 재구조화 시키기 위한 라이브러리 
 install.packages("ggplot2")    : ggplot차트를 그리기 위한 라이브러리 
