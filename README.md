@@ -3,11 +3,12 @@
 ## #기초환경설치
 ### package설치(dplyr, reshape2, ggplot2, scales)
 
+```c
 install.packages("dplyr")        : %>% 와 filter 및 select함수를 사용하기 위한 라이브러리 
 install.packages("reshape2")   : melt함수를 사용해서 데이터를 재구조화 시키기 위한 라이브러리 
 install.packages("ggplot2")    : ggplot차트를 그리기 위한 라이브러리 
 install.packages("scales")       : ggplot그래프의 y축 레이블에 콤마를 넣기 위한 라이브러리
-
+```
 ########################################################################
 ###라이브러리### : 위에서 설치한 라이브러리를 불러오는 구문
 library(dplyr)  		: dplyr 불러오기
