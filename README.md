@@ -19,44 +19,70 @@ library(reshape2)
 library(ggplot2)
 library(scales)	
 ```
+---------------------------------------------
+---------------------------------------------
+---------------------------------------------
+##### 변수 초기화
+```c
+rm(list=ls())
+```
 
-########################################################################
-###데이터 읽어오기###
-#rm(list=ls())   		: 저장되어있는 데이터들을 삭제 
-data.use <- read.csv(choose.files(),)   	: 설치되어 있는 csv파일을 data라는 데이터에 읽어오기 
-	   			  파일명 : "온라인쇼핑몰_취급상품범위_상품군별거래액_20200831163311.csv"
-data.use %>% head() 		: 읽어 온 data의 5행까지 보여줌 
+## 데이터 불러오기
++파일명 : "온라인쇼핑몰_취급상품범위_상품군별거래액_20200831163311.csv"
 
-########################################################################
-##### 분기 별 온라인 쇼핑 합계액 #####
-data.use.1 <- data.use %>% dplyr::select(시점,합계)   : data.use에서 `시점`과`합계`열을 선택해서 data.use.1에 저장
-names(data.use.1) <- c("분기","(억)원")		      :  data.use.1의 변수명을 `분기`,`(억)원`으로 변경
-data.use.1 %>% head()			      :  data.use.1의 5행까지 추출하여 보여줌 
+```c
+data.use <- read.csv(choose.files(),)
 
-########################################################################
-###데이터 시각화###
-ggp <- ggplot(data=data.use.1,aes(x=분기,y=`(억)원`,group=1)) +   :  data.use.1의 `분기`를 이용한 x축,`(억)원`을 이용한 y축을 가진 ggplot생성 
-  geom_line(size=2,color="skyblue")+ 				:  크기는2, 색은 skyblue를 가진 꺽은선 그래프를 그린다.
-  scale_y_continuous(labels=comma) +				:  y축 레이블에 콤마를 찍어주는 역할
-  theme(axis.text=element_text(size=30),axis.title=element_text(size=25,face="bold"),axis.text.x=element_text(angle=45,hjust=1)) 	:  그래프의 레이블 글씨 크기는 30 축제목은 25와 글씨굵기를 진하게 지정하고 x축의 레이블 각도를 45도로 지정한다.
-ggp 	:  위의 실행문이 저장되어 있는 ggp를 실행하는 역할
+data.use %>% head()
+```
+
+# #분기 별 온라인 쇼핑 합계액
+
+## 데이터 전처리
+
+### 사용 데이터 추출
++data.use에서 `시점`과`합계`열을 선택해서 data.use.1
+
+```c
+data.use.1 <- data.use %>% dplyr::select(시점,합계)
+```
+
+### 컬럼명 변경
+
+```c
++data.use.1의 변수명을 `분기`,`(억)원`으로 변경
+```
+
+## 데이터 시각화
++ data.use.1의 `분기`를 이용한 x축,`(억)원`을 이용한 y축을 가진 ggplot생성 
++ 크기는2, 색은 skyblue를 가진 꺽은선 그래프를 그린다.
++ y축 레이블에 콤마를 찍어주는 역할
++ 그래프의 레이블 글씨 크기는 30 축제목은 25와 글씨굵기를 진하게 지정하고 x축의 레이블 각도를 45도로 지정한다.
+
+```c
+ggp <- ggplot(data=data.use.1,aes(x=분기,y=`(억)원`,group=1)) +   :  
+  geom_line(size=2,color="skyblue")+ 				: 
+  scale_y_continuous(labels=comma) +				:  
+  theme(axis.text=element_text(size=30),axis.title=element_text(size=25,face="bold"),axis.text.x=element_text(angle=45,hjust=1)) 
+  
+ggp 	
+```
 
 
 
-########################################################################
-##### 분기 별 온라인쇼핑 상품군 거래액 #####
+# #분기 별 온라인쇼핑 상품군 거래액
 data.use.2 <- data.use %>% dplyr::select(시점,가전.전자.통신기기,생활용품,음식서비스,여행.및.교통서비스,음.식료품)    : data.use에서 `시점`,`가전.전자.통신기기`,`생활용품`,`음식서비스`,`여행.및.교통서비스`,`음.식료품` 열을 추출하여 data.use.2에 저장
 data.use.2 %>% head()  	:  data.use.2의 5행까지 추출하여 보여준다. 
 names(data.use.2) <- c("시점","가전전자통신기기","생활용품","배달음식서비스","여행및교통서비스","음식료품")     :   data.use.2의 변수명을 "시점","가전전자통신기기","생활용품","배달음식서비스","여행및교통서비스","음식료품" 로 변경해준다.
 
-########################################################################
+
 ###데이터 재구조화###
 data.melt.2 <- melt(data.use.2,id.var="시점",measure.vars=c("가전전자통신기기","생활용품","배달음식서비스","여행및교통서비스","음식료품"))	:  data.use.2의 그래프를 그리기위해  `시점`열을 기준으로 데이터를 재구조화 시킨 후 data.melt.2에 저장해준다
 names(data.melt.2) <- c("분기","상품군","(억)원")	    :   재구조화시킨 data.melt.2의 변수명을 "분기","상품군","(억)원"로 변경해준다.
 data.melt.2 %>% summary() 			    :  data.melt.2의 요약값을 보여준다
 data.melt.2 %>% head()			    :  data.melt.2의 5행까지 추출하여 보여준다. 
 
-########################################################################
+
 ## 데이터 전처리 ##
 data.melt.a <- data.melt.2 %>% filter(상품군=='가전전자통신기기')		:  data.melt.2의 `상품군`열에 `가전전자통신기기`가 들어있는 행만 추출하여 data.melt.a에 저장한다.
 data.melt.a$prepro <- data.melt.a$`(억)원`/data.melt.a[1,3]*100		:  data.melt.a의 1행3열에 해당하는 2017년1분기 거래액을 기준으로 각 분기를 나눈 값에 100을 곱한 후 data.melt.a의 prepro열을 생성하고 저장시킨다
@@ -76,7 +102,7 @@ data.melt.e$prepro <- data.melt.e$`(억)원`/data.melt.e[1,3]*100		:  data.melt.
 data.rb <- rbind(data.melt.a,data.melt.b,data.melt.c,data.melt.d,data.melt.e)	:  위의 전처리시킨 데이터 `data.melt.a`,`data.melt.b`,`data.melt.c`,`data.melt.d`,`data.melt.e`를 rbind함수를 이용해서 밑으로 병합시킨다
 data.rb %>% tail()							:  data.rb의 밑에서부터 5행을 추출하여 보여준다.
 
-########################################################################
+
 ## 데이터 시각화 ##
 ggp <- ggplot(data=data.rb,aes(x=분기,y=`prepro`,group=상품군,color=상품군)) +	:  data.rb의 `분기`를 이용해 x축을,`prepro`를 이용해 y축을 그룹과 색을 `상품군`으로 나눈 ggplot을 그린다
   geom_line(size=2) + labs(x="분기", y="변화율(%)") + 				:  x축제목은 "분기",y축제목을"변화율(%)"로 하는 꺽은선 그래프를 그린다.
